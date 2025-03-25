@@ -41,7 +41,8 @@ class ClientController extends Controller
     ]);
     $client = new client([
         'first_name'    =>  $request->get('first_name'),
-        'last_name'     =>  $request->get('last_name')
+        'last_name'     =>  $request->get('last_name'),
+        'type'     =>  $request->get('type'),
     ]);
     $client->save();
     return redirect()->route('client.index')->with('success', 'Client ajouté');
@@ -86,6 +87,7 @@ class ClientController extends Controller
         $client = client::find($id);
         $client->first_name = $request->get('first_name');
         $client->last_name = $request->get('last_name');
+        $client->type = $request->get('type');
         $client->save();
         return redirect()->route('client.index')->with('success', 'Client modifié');
     }

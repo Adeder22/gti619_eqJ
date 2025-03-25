@@ -23,6 +23,11 @@ class DatabaseSeeder extends Seeder
         User::insert(['name' => 'Utilisateur 1', 'password' => 'user1', 'role_id' => 2]);
         User::insert(['name' => 'Utilisateur 2', 'password' => 'user2', 'role_id' => 3]);
 
+        Client::insert(['first_name' => 'A', 'last_name' => 'AAResident', 'type' => 'Residentiel']);
+        Client::insert(['first_name' => 'B', 'last_name' => 'BBResident', 'type' => 'Residentiel']);
+        Client::insert(['first_name' => 'C', 'last_name' => 'CCAffaire', 'type' => 'Affaire']);
+        Client::insert(['first_name' => 'D', 'last_name' => 'DDAffaire', 'type' => 'Affaire']);
+        
         // \App\Models\User::factory(10)->create();
     }
 }

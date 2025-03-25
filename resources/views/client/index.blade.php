@@ -21,6 +21,7 @@
    <tr>
     <th>First Name</th>
     <th>Last Name</th>
+    <th>Type</th>
     <th>Edit</th>
     <th>Delete</th>
    </tr>
@@ -28,6 +29,7 @@
    <tr>
     <td>{{$row['first_name']}}</td>
     <td>{{$row['last_name']}}</td>
+    <td>{{$row['type']}}</td>
     <td><a href="{{route('client.edit',['id'=> $row['id']])}}" class="btn btn-warning">Edit</a></td>
     <td>
      <form method="post" class="delete_form" action="{{route('client.destroy',['id'=> $row['id']])}}">

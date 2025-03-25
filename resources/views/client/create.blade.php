@@ -30,6 +30,13 @@
     <input type="text" name="last_name" class="form-control" placeholder="Enter Last Name" />
    </div>
    <div class="form-group">
+        <label for="type">Client Type</label>
+        <select name="type" class="form-control">
+            <option value="Residentiel" selected>Residentiel</option>
+            <option value="Affaire">Affaire</option>
+        </select>
+    </div>
+   <div class="form-group">
     <input type="submit" class="btn btn-primary" />
    </div>
   </form>

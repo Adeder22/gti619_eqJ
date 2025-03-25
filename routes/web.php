@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ClientController;
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\ResidentsController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -22,6 +23,7 @@ Route::get('/test', function () {
     return view('authPage');
 });
 
+Route::resource('residents', ResidentsController::class);
 Route::resource('admin', AdminController::class);
 Route::resource('client', ClientController::class);
 Route::get('client/{id}/edit', 'ClientController@edit')->name('client.edit');
