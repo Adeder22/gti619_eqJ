@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ClientController;
+use App\Http\Controllers\AdminController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -21,6 +22,7 @@ Route::get('/test', function () {
     return view('authPage');
 });
 
+Route::resource('admin', AdminController::class);
 Route::resource('client', ClientController::class);
 Route::get('client/{id}/edit', 'ClientController@edit')->name('client.edit');
 Route::put('client/{id}', 'ClientController@update')->name('client.update');
