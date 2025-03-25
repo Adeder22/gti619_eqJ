@@ -3,6 +3,8 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
+use App\Models\Role;
+use App\Models\Client;
 
 class DatabaseSeeder extends Seeder
 {
@@ -13,6 +15,14 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
+        Role::insert(['name' => 'Administrateur']);
+        Role::insert(['name' => 'Préposé aux clients résidentiels']);
+        Role::insert(['name' => 'Préposé aux clients d’affaire']);
+
+        Client::insert(['name' => 'Administrateur', 'role_id' => 1]);
+        Client::insert(['name' => 'Utilisateur 1', 'role_id' => 2]);
+        Client::insert(['name' => 'Utilisateur 2', 'role_id' => 3]);
+
         // \App\Models\User::factory(10)->create();
     }
 }
