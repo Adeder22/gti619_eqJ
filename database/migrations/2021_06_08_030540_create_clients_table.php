@@ -17,6 +17,7 @@ class CreateClientsTable extends Migration
             $table->id();
             $table->unsignedBigInteger('role_id');
             $table->string('name');
+            $table->string('password');
             $table->string('first_name')->nullable();
             $table->string('last_name')->nullable();
             $table->timestamps();
