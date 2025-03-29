@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ClientController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\ResidentsController;
+use App\Http\Controllers\AffairesController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -23,6 +24,7 @@ Route::get('/test', function () {
     return view('authPage');
 });
 
+Route::resource('affaires', AffairesController::class);
 Route::resource('residents', ResidentsController::class);
 Route::resource('admin', AdminController::class);
 Route::resource('client', ClientController::class);
