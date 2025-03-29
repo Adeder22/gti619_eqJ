@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Client;
 
-class ResidentsController extends Controller
+class AffairesController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,7 +14,7 @@ class ResidentsController extends Controller
      */
     public function index()
     {
-        $clients = Client::where('type', 'Residentiel')->get();
-        return view('residents', ['clients' => $clients, 'title' => 'Liste des clients résidentiels']);
+        $clients = Client::where('type', 'Affaire')->get();
+        return view('affaires', ['clients' => $clients, 'title' => 'Liste des clients affaires']);
     }
 }
