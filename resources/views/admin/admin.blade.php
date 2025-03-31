@@ -1,11 +1,6 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Page Admin</title>
-</head>
-<body>
+@extends('master')
+
+@section('content')
     <h1>Admin</h1>
     <h2>Options de sécurité</h2>
     
@@ -68,5 +63,4 @@
             <button type="submit">Valider</button>
         </div>
     </form>
-</body>
-</html>
+@endsection
