@@ -12,7 +12,7 @@ class AuthController extends Controller
 {
     public function showLogin()
     {
-        return view('auth.login'); 
+        return view('auth.login');
     }
 
     public function login(Request $request)
@@ -49,5 +49,24 @@ class AuthController extends Controller
     {
         Auth::logout();
         return redirect('/login')->with('success', 'Déconnexion réussie.');
+    }
+
+    public function showPasswordChangeForm()
+    {
+        return view('auth.passwords.password-change');
+    }
+    public function changePassword(Request $request)
+    {
+        $credentials = $request->validate([
+            'name' => 'required|string',
+            'password' => 'required|string',
+        ]);
+        $response = DatabaseController::changePassword($credentials['name'], $credentials['password']);
+
+        if ($response == 'Success') {
+            return redirect()->route('dashboard')->with('success', 'Changement réussie!');
+        }
+
+        return back()->withErrors(['name' => 'Identifiants incorrects.'])->withInput();
     }
 }

@@ -30,6 +30,10 @@ Route::get('/login', [AuthController::class, 'showLogin'])->name('login');
 Route::post('/login', [AuthController::class, 'login']);
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
+//route leading to password page with post route
+Route::get('/password', [AuthController::class, 'showPasswordChangeForm'])->name('password-change');
+Route::post('/password', [AuthController::class, 'changePassword']);
+
 Route::get('/affaires', [AffairesController::class, 'index'])
     ->middleware('auth', 'role:Préposé aux clients d’affaire,Administrateur')
     ->name('affaires');

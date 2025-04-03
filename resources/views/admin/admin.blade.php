@@ -24,16 +24,18 @@
             <input type="radio" id="evenement" name="password-change" value="evenement">
             <label for="evenement">Suite à un évènement</label>
         </div>
+        <div>
+            <label for="attempt-limit">Limite de tentatives de connections: </label>
+            <input type="text" id="attempt-limit-count" name="attempt-limit-count" min="1" value="3" size="2">
+            <label for="attempt-limit"> tentatives</label>
+        </div>
 
         <br />
         <h4>Complexité du mot de passe</h4>
         <div>
-            <input type="checkbox" id="old-password" name="old-password"
-                <?php echo isset($old_password) && $old_password ? 'checked' : ''; ?>
-                onchange="document.getElementById('old-password-count').style.display = this.checked ? 'inline-block' : 'none';">
-            <label for="old-password">Ne peut pas utiliser un certain nombre d'anciens mots de passe</label>
-            <input type="text" id="old-password-count" name="old-password-count" value="5" size="2" label="anciens mots de passe"
-                style="display: <?php echo isset($old_password) && $old_password ? 'block' : 'none'; ?>;">
+            <label for="old-password">Ne peut pas utiliser un certain nombre d'anciens mots de passe: </label>
+            <input type="text" id="old-password-count" name="old-password-count" min="0" value="1" size="2">
+            <label for="old-password"> anciens mots de passes </label>
         </div>
         <div>
             <input type="checkbox" id="lowercase-uppercase" name="lowercase-uppercase">
