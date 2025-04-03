@@ -14,15 +14,11 @@
     <h1>Admin</h1>
     <h2><u>Options de sécurité</u></h2>
 
-    <form method="post" action="">
+    <form method="post" action="{{ route('admin') }}">
         <h4>Changement de mot de passe</h4>
         <div>
             <input type="radio" id="periodique" name="password-change" value="periodique" checked>
             <label for="periodique">Périodiquement</label>
-        </div>
-        <div>
-            <input type="radio" id="evenement" name="password-change" value="evenement">
-            <label for="evenement">Suite à un évènement</label>
         </div>
         <div>
             <label for="attempt-limit">Limite de tentatives de connections: </label>

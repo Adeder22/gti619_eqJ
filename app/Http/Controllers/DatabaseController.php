@@ -10,7 +10,6 @@ use Illuminate\Routing\Controller as BaseController;
 
 class DatabaseController extends Controller
 {
-    //Public function takes in name, newPassword to change password of the User table
     public static function changePassword($name, $newPassword)
     {
         $user = User::where('name', $name)->first();

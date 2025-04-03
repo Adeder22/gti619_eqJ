@@ -15,6 +15,9 @@
                     @error('password') <p class="text-danger">{{ $message }}</p> @enderror
                 <br />
                 <button class="btn btn-primary" type="submit">Se connecter</button>
+                <div>
+                    <a href="{{ url('/password') }}" class="btn btn-secondary">Mot de passe oublié ?</a>
+                </div>
             </div>
             <div id="bottom">
                 <a href="{{ url('/register') }}">Vous n'avez pas encore de compte ?</a>

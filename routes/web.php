@@ -45,6 +45,7 @@ Route::get('/residents', [ResidentsController::class, 'index'])
 Route::get('/admin', [AdminController::class, 'index'])
     ->middleware('auth', 'role:Administrateur')
     ->name('admin');
+Route::post('/admin', [AdminController::class, 'updatePasswordPolicy']);
 
 Route::resource('client', ClientController::class);
 Route::get('client/{id}/edit', 'ClientController@edit')->name('client.edit');

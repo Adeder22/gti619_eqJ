@@ -10,4 +10,9 @@ class AdminController extends Controller
     {
         return view('admin/admin');
     }
+
+    public function updatePasswordPolicy(Request $request)
+    {
+        return redirect()->route('dashboard');
+    }
 }
