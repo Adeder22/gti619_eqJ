@@ -6,6 +6,7 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\ResidentsController;
 use App\Http\Controllers\AffairesController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\RegisterController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -25,6 +26,12 @@ Route::get('/dashboard', function () {
     return view('dashboard', [
         'role' => auth()->user()->role->name ]);
 })->middleware('auth')->name('dashboard');
+
+Route::get('/register', function () {
+    return view('auth.register');
+})->name('register');
+
+Route::post('/register', [RegisterController::class, 'register']);
 
 Route::get('/login', [AuthController::class, 'showLogin'])->name('login');
 Route::post('/login', [AuthController::class, 'login']);
