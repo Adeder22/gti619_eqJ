@@ -19,6 +19,7 @@ class DatabaseSeeder extends Seeder
         Role::insert(['name' => 'Administrateur']);
         Role::insert(['name' => 'Préposé aux clients résidentiels']);
         Role::insert(['name' => 'Préposé aux clients d’affaire']);
+        Role::insert(['name' => 'Aucune']);
 
         User::insert(['name' => 'Administrateur', 'password' => 'admin123', 'role_id' => 1]);
         User::insert(['name' => 'Utilisateur 1', 'password' => 'user1', 'role_id' => 2]);
