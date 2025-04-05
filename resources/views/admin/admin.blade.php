@@ -15,10 +15,11 @@
     <h2><u>Options de sécurité</u></h2>
 
     <form method="post" action="{{ route('admin') }}">
+        @csrf
         <h4>Changement de mot de passe</h4>
         <div>
-            <input type="radio" id="periodique" name="password-change" value="periodique" checked>
-            <label for="periodique">Périodiquement</label>
+            <label for="max_day">Durée avant changement de mot de passe (en jours): </label>
+            <input type="number" id="max_day" name="max_day" min="1" value="1" size="2">
         </div>
         <div>
             <label for="attempt-limit">Limite de tentatives de connections: </label>
