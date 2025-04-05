@@ -5,7 +5,7 @@
   
     <div class="card-body text-center">
         <h2>Bienvenue, {{ Auth::user()->name }}!</h2>
-        <p>Vous êtes connecté en tant que <strong>{{ $role }}</strong>.</p>
+        <p>Vous êtes connecté avec le role <strong>{{ $role }}</strong>.</p>
 
         <a href="{{ url('/') }}" class="btn btn-primary">Retour à l'accueil</a>
 
