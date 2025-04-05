@@ -15,9 +15,9 @@
 
                 <select class="form-control" name="role_id" required>
                     <option value="" disabled selected>Choisissez un rôle</option>
-                    <option value="1">Préposé aux clients résidentiels</option>
-                    <option value="2">Préposé aux clients d’affaire</option>
-                    <option value="3">Administrateur</option>
+                    <option value="1">Administrateur</option>
+                    <option value="2">Préposé aux clients résidentiels</option>
+                    <option value="3">Préposé aux clients d’affaire</option>
                     <option value="4">Aucune</option>
                 </select>
                 @error('role_id') <p class="text-danger">{{ $message }}</p> @enderror
