@@ -21,7 +21,7 @@
             left: 50%;
             transform: translateX(-50%);
             width: 60%;
-            height: 45%;
+            height: 50%;
             border-radius: 25px;
             text-align: center;
             background-color:rgb(86, 109, 185);
