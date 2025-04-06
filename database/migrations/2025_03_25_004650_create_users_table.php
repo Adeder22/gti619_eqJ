@@ -18,6 +18,7 @@ class CreateUsersTable extends Migration
             $table->unsignedBigInteger('role_id');
             $table->string('name');
             $table->string('password');
+            $table->string('salt');
             $table->timestamps();
 
             $table->foreign('role_id')

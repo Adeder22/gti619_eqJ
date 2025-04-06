@@ -21,9 +21,9 @@ class DatabaseSeeder extends Seeder
         Role::insert(['name' => 'Préposé aux clients d’affaire']);
         Role::insert(['name' => 'Aucune']);
 
-        User::insert(['name' => 'Administrateur', 'password' => 'admin123', 'role_id' => 1]);
-        User::insert(['name' => 'Utilisateur 1', 'password' => 'user1', 'role_id' => 2]);
-        User::insert(['name' => 'Utilisateur 2', 'password' => 'user2', 'role_id' => 3]);
+        User::insert(['name' => 'Administrateur', 'password' => '$2y$10$xpr8uG4INjv7jeQ5VWqKauKKD6Cgv9Fhe2fXdchADmqLW/ec1rAWO', 'role_id' => 1, 'salt' => '09339f6ec9809811']);
+        User::insert(['name' => 'Utilisateur 1', 'password' => '$2y$10$Khfi6peyB2sKFDZ4uqLbCOJnnWB9M2AL2e1mzoB/ZISTVeBzpCgXa', 'role_id' => 2, 'salt' => '59a68525f111dcb7']);
+        User::insert(['name' => 'Utilisateur 2', 'password' => '$2y$10$x8D39qkvqNHu98ekSA4/U.FJwXFAE8hGBphhehrszinjXBHoCrusS', 'role_id' => 3, 'salt' => 'e9b1110a8d2de33d']);
 
         Client::insert(['first_name' => 'A', 'last_name' => 'AAResident', 'type' => 'Residentiel']);
         Client::insert(['first_name' => 'B', 'last_name' => 'BBResident', 'type' => 'Residentiel']);
