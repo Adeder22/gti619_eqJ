@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Facades\Hash;
 use App\Models\PasswordResetTimes;
 use App\Models\User;
 use Carbon\Carbon;
@@ -18,6 +19,11 @@ class AuthController extends Controller
 
     public function login(Request $request)
     {
+        function VerifyHashPassword($user, $inputPassword)
+        {
+            return  Hash::check($inputPassword . $user->salt, $user->password);
+        }
+
         $credentials = $request->validate([
             'name' => 'required|string',
             'password' => 'required|string',
@@ -31,7 +37,7 @@ class AuthController extends Controller
         }
 
         // Check if the user exists and the password is correct
-        if ($user && $user->password === $credentials['password']) {
+        if ($user && VerifyHashPassword($user, $credentials['password'])) {
             Auth::login($user);
 
             // Remettre à zéro le nombre de tentatives de connexion
@@ -59,7 +65,7 @@ class AuthController extends Controller
         // et que le mot de passe est incorrect
         if ($user) {
             $user->increment('failed_attempts');
-        } 
+        }
         return back()->withErrors(['name' => 'Identifiants incorrects.'])->withInput();
     }
 
