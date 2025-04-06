@@ -16,14 +16,12 @@ class AuthController extends Controller
     {
         return view('auth.login');
     }
-
+    private function VerifyHashPassword($user, $inputPassword)
+    {
+        return  Hash::check($inputPassword . $user->salt, $user->password);
+    }
     public function login(Request $request)
     {
-        function VerifyHashPassword($user, $inputPassword)
-        {
-            return  Hash::check($inputPassword . $user->salt, $user->password);
-        }
-
         $credentials = $request->validate([
             'name' => 'required|string',
             'password' => 'required|string',
@@ -37,7 +35,7 @@ class AuthController extends Controller
         }
 
         // Check if the user exists and the password is correct
-        if ($user && VerifyHashPassword($user, $credentials['password'])) {
+        if ($user && $this->VerifyHashPassword($user, $credentials['password'])) {
             Auth::login($user);
 
             // Remettre à zéro le nombre de tentatives de connexion
@@ -95,14 +93,24 @@ class AuthController extends Controller
     {
         $credentials = $request->validate([
             'name' => 'required|string',
-            'password' => 'required|string',
+            'oldPassword' => 'required|string',
+            'newPassword' => 'required|string',
         ]);
-        $response = DatabaseController::changePassword($credentials['name'], $credentials['password']);
-
-        if ($response == 'Success') {
-            return redirect()->route('dashboard')->with('success', 'Changement réussie!');
+        $user = User::where('name', $credentials['name'])->first();
+        if ($credentials['oldPassword'] === $credentials['newPassword']) {
+            return back()->withErrors(['name' => 'Le nouveau mot de passe doit être différent de l’ancien mot de passe.'])->withInput();
         }
+        if ($user) {
+            if (!$this->VerifyHashPassword($user, $credentials['oldPassword'])) {
+                return back()->withErrors(['name' => 'Ancien mot de passe incorrect'])->withInput();
+            }
 
+            $response = DatabaseController::changePassword($credentials['name'], $credentials['newPassword']);
+
+            if ($response == 'Success') {
+                return redirect()->route('dashboard')->with('success', 'Changement réussie!');
+            }
+        }
         return back()->withErrors(['name' => 'Identifiants incorrects.'])->withInput();
     }
 }

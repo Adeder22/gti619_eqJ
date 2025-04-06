@@ -11,7 +11,10 @@
                 <input type="text" class="form-control" id="nameInput" placeholder="Nom d'utilisateur" name="name" value="{{ $name ?? '' }}" {{ $name ? 'readonly' : '' }} required>
                 @error('name') <p class="text-danger">{{ $message }}</p> @enderror
                 <br />
-                <input type="password" class="form-control" id="passwordInput" placeholder="Nouveau mot de passe" name="password" required>
+                <input type="password" class="form-control" id="oldPasswordInput" placeholder="Ancien mot de passe" name="oldPassword" required>
+                @error('password') <p class="text-danger">{{ $message }}</p> @enderror
+                <br />
+                <input type="password" class="form-control" id="newPasswordInput" placeholder="Nouveau mot de passe" name="newPassword" required>
                 @error('password') <p class="text-danger">{{ $message }}</p> @enderror
                 <br />
                 <button class="btn btn-primary" type="submit">Changer votre mot de passe</button>
