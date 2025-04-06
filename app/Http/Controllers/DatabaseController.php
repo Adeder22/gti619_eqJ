@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Foundation\Validation\ValidatesRequests;
@@ -14,8 +15,13 @@ class DatabaseController extends Controller
     {
         $user = User::where('name', $name)->first();
 
-        if ($user && $user->password !== $newPassword) {
-            $user->password = $newPassword;
+        // Hashing
+        $salt = $user->salt;
+        $final_pass = Hash::make($newPassword . $salt);
+
+        $same_pass = Hash::check($newPassword . $salt, $user->password);
+        if ($user && !$same_pass) {
+            $user->password = $final_pass;
             $user->save();
 
             return 'Success';
