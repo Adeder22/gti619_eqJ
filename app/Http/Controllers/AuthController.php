@@ -87,7 +87,7 @@ class AuthController extends Controller
             $user->last_attempt = Carbon::now();
             $user->save();
         }
-        return back()->withErrors(['name' => 'Identifiants incorrects. Merci d\'attendre 15 secondes avant votre prchaine tentative.'])->withInput();
+        return back()->withErrors(['name' => 'Identifiants incorrects. Merci d\'attendre 15 secondes avant votre prochaine tentative.'])->withInput();
     }
 
     private function isPasswordExpired($lastestUserUpdate)
