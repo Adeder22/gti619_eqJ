@@ -24,7 +24,8 @@ class AuthController extends Controller
             return  Hash::check($inputPassword . $user->salt, $user->password);
         }
 
-        function VerifyFailedAttempts($user){
+        function VerifyFailedAttempts($user)
+        {
             if ($user->failed_attempts >= 3) {
                 return back()->withErrors(['name' => 'Trop de tentatives de connexion échouées.Veuillez contacter un responsable'])->withInput();
             }
@@ -38,11 +39,13 @@ class AuthController extends Controller
         $user = User::where('name', $credentials['name'])->first();
 
         // Check if it's been fifteen seconds since last attempt
-        $now = Carbon::now();
-        $last_attempt = Carbon::parse($user->last_attempt);
-        $diff = $last_attempt->diffInSeconds($now);
-        if ($diff < 15) {
-            return back()->withErrors(['name' => 'Merci d\'attendre ' . strval(15 - $diff) . ' secondes avant votre prchaine tentative.'])->withInput();
+        if ($user->last_attempt != null) {
+            $now = Carbon::now();
+            $last_attempt = Carbon::parse($user->last_attempt);
+            $diff = $last_attempt->diffInSeconds($now);
+            if ($diff < 15) {
+                return back()->withErrors(['name' => 'Merci d\'attendre ' . strval(15 - $diff) . ' secondes avant votre prchaine tentative.'])->withInput();
+            }
         }
 
         // Vérifier si l'utilisateur a déjà atteint le nombre maximum de tentatives de connexion
