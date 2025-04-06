@@ -9,10 +9,10 @@
                     <h2>Se connecter au compte</h2>
                 </div>
                 <input type="text" class="form-control" id="nameInput" placeholder="Nom d'utilisateur" name="name" required>
-                    @error('name') <p class="text-danger">{{ $message }}</p> @enderror
+                    @error('name') <p class="fw-bold text-danger">{{ $message }}</p> @enderror
                 <br />
                 <input type="password" class="form-control" id="passwordInput" placeholder="Mot de passe" name="password" required>
-                    @error('password') <p class="text-danger">{{ $message }}</p> @enderror
+                    @error('password') <p class="fw-bold text-danger">{{ $message }}</p> @enderror
                 <br />
                 <button class="btn btn-primary" type="submit">Se connecter</button>
                 <div>

@@ -19,6 +19,7 @@ class CreateUsersTable extends Migration
             $table->string('name');
             $table->string('password');
             $table->string('salt');
+            $table->timestamp('last_attempt')->nullable();
             $table->timestamps();
 
             $table->foreign('role_id')
