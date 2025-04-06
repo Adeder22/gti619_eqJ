@@ -24,9 +24,17 @@ class AuthController extends Controller
 
         $user = User::where('name', $credentials['name'])->first();
 
+        // Vérifier si l'utilisateur a déjà atteint le nombre maximum de tentatives de connexion
+        if ($user && $user->failed_attempts >= 3) {
+            return back()->withErrors(['name' => 'Trop de tentatives de connexion échouées.Veuillez contacter un responsable'])->withInput();
+        }
+
         // Check if the user exists and the password is correct
         if ($user && $user->password === $credentials['password']) {
             Auth::login($user);
+
+            // Remettre à zéro le nombre de tentatives de connexion
+            $user->failed_attempts = 0;
 
             $roleRedirectPages = [
                 'Préposé aux clients résidentiels' => 'residents',
@@ -41,7 +49,11 @@ class AuthController extends Controller
 
             return redirect()->route('dashboard')->with('success', 'Connexion réussie!');
         }
-
+        //incrémenter le nombre de tentatives de connexion si l'utilisateur existe
+        // et que le mot de passe est incorrect
+        if ($user) {
+            $user->increment('failed_attempts');
+        } 
         return back()->withErrors(['name' => 'Identifiants incorrects.'])->withInput();
     }
 
