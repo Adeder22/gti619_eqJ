@@ -23,8 +23,15 @@ Route::get('/', function () {
 });
 
 Route::get('/dashboard', function () {
+    $roleLinks = [
+        'Préposé aux clients résidentiels' => ['residents'],
+        'Préposé aux clients d’affaire' => ['affaires'],
+        'Administrateur' => ['residents', 'affaires', 'admin'],
+    ];
+
+    $roleName = auth()->user()->role->name;
     return view('dashboard', [
-        'role' => auth()->user()->role->name ]);
+        'role' => $roleName, 'links' => $roleLinks[$roleName]]);
 })->middleware('auth')->name('dashboard');
 
 Route::get('/register', function () {

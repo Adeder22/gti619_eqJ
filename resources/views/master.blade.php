@@ -64,11 +64,14 @@
 </head>
 <body>
     @if(Auth::check())
+
+    <div class="p-2">
         <a href="{{ url('/dashboard') }}" class="btn btn-primary" >Tableau de bord</a>
         <form action="{{ route('logout') }}" method="POST" style="display:inline;">
             @csrf
             <button type="submit" class="btn btn-danger">Se déconnecter</button>
         </form>
+    </div>
     @else
         <a href="{{ url('/login') }}">Se connecter</a>
     @endif
