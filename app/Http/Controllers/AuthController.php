@@ -44,7 +44,7 @@ class AuthController extends Controller
             $last_attempt = Carbon::parse($user->last_attempt);
             $diff = $last_attempt->diffInSeconds($now);
             if ($diff < 15) {
-                return back()->withErrors(['name' => 'Merci d\'attendre ' . strval(15 - $diff) . ' secondes avant votre prchaine tentative.'])->withInput();
+                return back()->withErrors(['name' => 'Merci d\'attendre ' . strval(15 - $diff) . ' secondes avant votre prochaine tentative.'])->withInput();
             }
         }
 
