@@ -1,47 +1,38 @@
-@extends('master')
+<!DOCTYPE html>
+<html lang="en">
 
-@section('content')
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Page Admin</title>
+</head>
+
+<body>
+    @extends('master')
+
+    @section('content')
     <h1>Admin</h1>
-    <h2>Options de sécurité</h2>
-    
-    <h3>Changement de mot de passe</h3>
-    <table border="1">
-        <thead>
-            <tr>
-                <th>Utilisateur</th>
-                <th>Changement de mot de passe</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <td><a href="#">Ooga1</a></td>
-                <td>
-                    <input type="input">
-                    <button type="submit">Valider</button>
-                </td>
-            </tr>
-            <tr>
-                <td><a href="#">Ooga2</a></td>
-                <td>
-                    <input type="input">
-                    <button type="submit">Valider</button>
-                </td>
-            </tr>
-            <tr>
-                <td><a href="#">Ooga3</a></td>
-                <td>
-                    <input type="input">
-                    <button type="submit">Valider</button>
-                </td>
-            </tr>
-        </tbody>
-    </table>
+    <h2><u>Options de sécurité</u></h2>
 
-    <h3>Complexité du mot de passe</h3>
-    <form method="post" class="password_complexity" action="">
+    <form method="post" action="{{ route('admin') }}">
+        @csrf
+        <h4>Changement de mot de passe</h4>
         <div>
-            <input type="checkbox" id="lowercase-uppercase" name="lowercase-uppercase">
-            <label for="lowercase-uppercase">Ne peut pas utiliser l'ancien mot de passe</label>
+            <label for="max_day">Durée avant changement de mot de passe (en jours): </label>
+            <input type="number" id="max_day" name="max_day" min="1" value="1" size="2">
+        </div>
+        <div>
+            <label for="attempt-limit">Limite de tentatives de connections: </label>
+            <input type="text" id="attempt-limit-count" name="attempt-limit-count" min="1" value="3" size="2">
+            <label for="attempt-limit"> tentatives</label>
+        </div>
+
+        <br />
+        <h4>Complexité du mot de passe</h4>
+        <div>
+            <label for="old-password">Ne peut pas utiliser un certain nombre d'anciens mots de passe: </label>
+            <input type="text" id="old-password-count" name="old-password-count" min="0" value="1" size="2">
+            <label for="old-password"> anciens mots de passes </label>
         </div>
         <div>
             <input type="checkbox" id="lowercase-uppercase" name="lowercase-uppercase">
@@ -56,11 +47,11 @@
             <label for="number">Doit contenir un nombre</label>
         </div>
         <div>
-            <label for="length">Longueur:</label>
-            <input type="number" id="length" name="length" min="0">
+            <label for="minLength">Longueur minimale:</label>
+            <input type="number" id="minLength" name="minLength" min="0" value="4">
         </div>
         <div>
             <button type="submit">Valider</button>
         </div>
     </form>
-@endsection
+    @endsection

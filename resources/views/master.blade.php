@@ -57,9 +57,9 @@
             a {
                 font-size: 2.5vw;
             }
-            
+
         }
-        
+
     </style>
 </head>
 <body>
@@ -76,6 +76,6 @@
 <div class="container">
    @yield('content')
 </div>
- 
+
 </body>
 </html>
