@@ -19,11 +19,11 @@
         <h4>Changement de mot de passe</h4>
         <div>
             <label for="max_day">Durée avant changement de mot de passe (en jours): </label>
-            <input type="number" id="max_day" name="max_day" min="1" value="1" size="2">
+            <input type="number" id="max_day" name="max_day" min="1" value="{{ $passResetTime ?? 1 }}" size="2">
         </div>
         <div>
             <label for="attempt-limit">Limite de tentatives de connections: </label>
-            <input type="text" id="attempt-limit-count" name="attempt-limit-count" min="1" value="3" size="2">
+            <input type="number" id="attempt-limit-count" name="attempt-limit-count" min="1" value="{{ $attempts ?? 3 }}" size="2">
             <label for="attempt-limit"> tentatives</label>
         </div>
 
@@ -40,7 +40,7 @@
         </div>
         <div>
             <input type="checkbox" id="special-character" name="special-character">
-            <label for="special-character">Doit contenir un caractère spécial</label>
+            <label for="special-character">Doit contenir un caractère spécial (parmi ~!@#$%^&*()_+)</label>
         </div>
         <div>
             <input type="checkbox" id="number" name="number">

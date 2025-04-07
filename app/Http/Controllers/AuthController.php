@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Support\Facades\Hash;
 use App\Models\PasswordResetTimes;
 use App\Models\User;
+use App\Models\AdminSettings;
+
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -25,7 +27,8 @@ class AuthController extends Controller
         $failedAttemptReturn = back()->withErrors(['name' => 'Trop de tentatives de connexion échouées.Veuillez contacter un responsable'])->withInput();
         function VerifyAttempts($user)
         {
-            return $user->failed_attempts >= 3;
+            $max_attempts = AdminSettings::find(1)->attempts;
+            return $user->failed_attempts >= $max_attempts;
         }
 
         $credentials = $request->validate([

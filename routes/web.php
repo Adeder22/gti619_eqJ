@@ -27,6 +27,7 @@ Route::get('/dashboard', function () {
         'Préposé aux clients résidentiels' => ['residents'],
         'Préposé aux clients d’affaire' => ['affaires'],
         'Administrateur' => ['residents', 'affaires', 'admin'],
+        'Aucune' => []
     ];
 
     $roleName = auth()->user()->role->name;
