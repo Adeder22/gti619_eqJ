@@ -150,6 +150,10 @@ class AuthController extends Controller
                 return back()->withErrors(['newPassword' => 'Mot de passe pas conforme au règles'])->withInput();
             }
 
+            if (!DatabaseController::VerifyRepeatPassword($user, $newPassword)){
+                return back()->withErrors(['newPassword' => 'Interdit d\'utiliser un ancien mot de passe'])->withInput();
+            }
+
             $response = DatabaseController::changePassword($credentials['name'], $newPassword);
 
             if ($response == 'Success') {
