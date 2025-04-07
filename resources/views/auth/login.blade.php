@@ -14,7 +14,7 @@
                 <input type="password" class="form-control" id="passwordInput" placeholder="Mot de passe" name="password" required>
                     @error('password') <p class="fw-bold text-danger">{{ $message }}</p> @enderror
                 <br />
-                <button class="btn btn-primary" type="submit">Se connecter</button>
+                <button class="btn btn-primary mb-2" type="submit">Se connecter</button>
                 <div>
                     <a href="{{ url('/password') }}" class="btn btn-secondary">Mot de passe oublié ?</a>
                 </div>
