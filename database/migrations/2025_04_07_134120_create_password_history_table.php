@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateAdminSettingsTable extends Migration
+class CreatePasswordHistoryTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,14 +13,10 @@ class CreateAdminSettingsTable extends Migration
      */
     public function up()
     {
-        Schema::create('admin_settings', function (Blueprint $table) {
+        Schema::create('password_history', function (Blueprint $table) {
             $table->id();
-            $table->string('attempts');
-            $table->string('old_passes');
-            $table->boolean('capitals');
-            $table->boolean('special_chars');
-            $table->boolean('numbers');
-            $table->string('length');
+            $table->string("name");
+            $table->string("password");
             $table->timestamps();
         });
     }
@@ -32,6 +28,6 @@ class CreateAdminSettingsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('admin_settings');
+        Schema::dropIfExists('password_history');
     }
 }

@@ -31,24 +31,24 @@
         <h4>Complexité du mot de passe</h4>
         <div>
             <label for="old-password">Ne peut pas utiliser un certain nombre d'anciens mots de passe: </label>
-            <input type="text" id="old-password-count" name="old-password-count" min="0" value="1" size="2">
+            <input type="number" id="old-password-count" name="old-password-count" min="0" value="{{ $old_passes ?? 1 }}" size="2">
             <label for="old-password"> anciens mots de passes </label>
         </div>
         <div>
-            <input type="checkbox" id="lowercase-uppercase" name="lowercase-uppercase">
+            <input type="checkbox" id="lowercase-uppercase" name="lowercase-uppercase" {{ $capitals ? 'checked': '' }}>
             <label for="lowercase-uppercase">Doit contenir au moins une minuscule et une majuscule</label>
         </div>
         <div>
-            <input type="checkbox" id="special-character" name="special-character">
+            <input type="checkbox" id="special-character" name="special-character" {{ $special_chars ? 'checked': ''  }}>
             <label for="special-character">Doit contenir un caractère spécial (parmi ~!@#$%^&*()_+)</label>
         </div>
         <div>
-            <input type="checkbox" id="number" name="number">
+            <input type="checkbox" id="number" name="number" {{ $numbers ? 'checked': ''  }}>
             <label for="number">Doit contenir un nombre</label>
         </div>
         <div>
             <label for="minLength">Longueur minimale:</label>
-            <input type="number" id="minLength" name="minLength" min="0" value="4">
+            <input type="number" id="minLength" name="minLength" min="1" value="{{ $length ?? 4 }}" >
         </div>
         <div>
             <button type="submit">Valider</button>

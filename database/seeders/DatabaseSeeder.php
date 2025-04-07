@@ -31,8 +31,8 @@ class DatabaseSeeder extends Seeder
         Client::insert(['first_name' => 'B', 'last_name' => 'BBResident', 'type' => 'Residentiel']);
         Client::insert(['first_name' => 'C', 'last_name' => 'CCAffaire', 'type' => 'Affaire']);
         Client::insert(['first_name' => 'D', 'last_name' => 'DDAffaire', 'type' => 'Affaire']);
-
-        AdminSettings::insert(['attempts' => 3]);
+        
+        AdminSettings::insert(['attempts' => 3, 'old_passes' => 3, 'capitals' => false, 'special_chars' => false, 'numbers' => false, 'length' => 4]);
         // \App\Models\User::factory(10)->create();
     }
 }

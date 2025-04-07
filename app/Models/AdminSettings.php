@@ -8,5 +8,13 @@ use Illuminate\Database\Eloquent\Model;
 class AdminSettings extends Model
 {
     use HasFactory;
-    protected $fillable = ['attempts'];
+    protected $fillable = [
+        'attempts',
+        'attempts',
+        'old_passes',
+        'capitals',
+        'special_chars',
+        'numbers',
+        'length',
+    ];
 }

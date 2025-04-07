@@ -18,9 +18,23 @@ class AdminController extends Controller
         if ($pass) $passResetTime = $pass->max_day;
 
         // Password Attempts
-        $attempts = AdminSettings::find(1)->attempts;
+        $settings = AdminSettings::find(1);
+        $attempts = $settings->attempts;
+        $old_passes = $settings->old_passes;
+        $capitals = $settings->capitals;
+        $special_chars = $settings->special_chars;
+        $numbers = $settings->numbers;
+        $length = $settings->length;
 
-        return view('admin/admin', ['passResetTime' => $passResetTime, 'attempts' => $attempts]);
+        return view('admin/admin', [
+            'passResetTime' => $passResetTime,
+            'attempts' => $attempts,
+            'old_passes' => $old_passes,
+            'capitals' => $capitals,
+            'special_chars' => $special_chars,
+            'numbers' => $numbers,
+            'length' => $length,
+        ]);
     }
 
     public function updatePasswordPolicy(Request $request)
@@ -39,6 +53,11 @@ class AdminController extends Controller
         // Password Attempts
         AdminSettings::find(1)->update([
             'attempts' => $request->input('attempt-limit-count'),
+            'old_passes' => $request->input('old-password-count'),
+            'capitals' => $request->input('lowercase-uppercase') == 'on',
+            'special_chars' => $request->input('special-character') == 'on',
+            'numbers' => $request->input('number') == 'on',
+            'length' => $request->input('minLength'),
         ]);
 
 
