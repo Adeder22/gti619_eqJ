@@ -80,6 +80,11 @@ class AuthController extends Controller
 
             // Check if the password is expired
             if ($this->isPasswordExpired($user)) {
+                // Log password expirated login attempt
+                SecurityLogs::create([
+                    'name' => $user->name,
+                    'action' => 'Password expired login attempt'
+                ]);
                 return redirect()->route('password-change', ['status' => 'expired', 'username' => $user->name])->withErrors(['name' => 'Votre mot de passe a expiré. Veuillez le changer.']);
             }
 
@@ -115,11 +120,11 @@ class AuthController extends Controller
 
     private function isPasswordExpired($user)
     {
-        $lastestUserUpdate = $user->updated_at;
+        $lastestUserUpdate = $user->created_at;
         $history = PasswordHistory::where('name', $user->name)
             ->orderByDesc('created_at')
             ->first();
-        
+
         if ($history && $history->count() > 0){
             $lastestUserUpdate = $history->created_at;
         }
