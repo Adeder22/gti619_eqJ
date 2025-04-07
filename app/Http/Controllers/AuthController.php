@@ -128,8 +128,21 @@ class AuthController extends Controller
 
     public function showPasswordChangeForm(Request $request)
     {
+        $settings = AdminSettings::find(1);
+        $capitals = $settings->capitals;
+        $special_chars = $settings->special_chars;
+        $numbers = $settings->numbers;
+        $length = $settings->length;
+
         $title = $request->query('status') === 'expired' ? 'Votre mot de passe a expiré. Veuillez le changer' : 'Changement de mot de passe';
-        return view('auth.passwords.password-change', ['title' => $title, 'name' => $request->query('name')]);
+        return view('auth.passwords.password-change', [
+            'title' => $title,
+            'name' => $request->query('name'),
+            'capitals' => $capitals,
+            'special_chars' => $special_chars,
+            'numbers' => $numbers,
+            'length' => $length
+        ]);
     }
 
     public function changePassword(Request $request)
@@ -140,15 +153,26 @@ class AuthController extends Controller
             'newPassword' => 'required|string',
         ]);
         $user = User::where('name', $credentials['name'])->first();
-        if ($credentials['oldPassword'] === $credentials['newPassword']) {
+        $oldPassword = $credentials['oldPassword'];
+        $newPassword = $credentials['newPassword'];
+
+        if ($oldPassword === $newPassword) {
             return back()->withErrors(['name' => 'Le nouveau mot de passe doit être différent de l’ancien mot de passe.'])->withInput();
         }
         if ($user) {
-            if (!$this->VerifyHashPassword($user, $credentials['oldPassword'])) {
+            if (!$this->VerifyHashPassword($user, $oldPassword)) {
                 return back()->withErrors(['name' => 'Ancien mot de passe incorrect'])->withInput();
             }
 
-            $response = DatabaseController::changePassword($credentials['name'], $credentials['newPassword']);
+            if (!DatabaseController::VerifyPasswordConformity($newPassword)){
+                return back()->withErrors(['newPassword' => 'Mot de passe pas conforme au règles'])->withInput();
+            }
+
+            if (!DatabaseController::VerifyRepeatPassword($user, $newPassword)){
+                return back()->withErrors(['newPassword' => 'Interdit d\'utiliser un ancien mot de passe'])->withInput();
+            }
+
+            $response = DatabaseController::changePassword($credentials['name'], $newPassword);
 
             if ($response == 'Success') {
                 return redirect()->route('dashboard')->with('success', 'Changement réussie!');

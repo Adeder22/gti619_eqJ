@@ -4,7 +4,7 @@
 <div class="container">
     <form action="{{ route('register') }}" method="POST">
         @csrf
-        <div class="card">
+        <div class="card" >
             <div class="card-body">
                 <div class="card-header">
                     <h2>Créer un compte</h2>
@@ -24,8 +24,27 @@
                 <br />
 
                 <input type="password" class="form-control" placeholder="Mot de passe" name="password" required>
-                @error('password') <p class="text-danger">{{ $message }}</p> @enderror
-                <br />
+                <ul class="text-start">
+                    @if ($capitals)
+                        <li>
+                            Doit contenir au moins une lettre majuscules
+                        </li>
+                    @endif
+                    @if ($special_chars)
+                        <li>
+                            Doit contenir un caractère spécial parmi ~!@#$%^&*()_+
+                        </li>
+                    @endif
+                    @if ($numbers)
+                        <li>
+                            Doit contenir au moins un chiffre
+                        </li>
+                        @endif
+                        <li>
+                            Doit avoir au moins {{ $length }} caractères
+                        </li>
+                </ul>
+                @error('password') <p class="fw-bold text-danger">{{ $message }}</p> @enderror
 
                 <input type="password" class="form-control" placeholder="Confirmer le mot de passe" name="password_confirmation" required>
                 <br />
