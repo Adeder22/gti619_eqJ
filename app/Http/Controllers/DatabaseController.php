@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\SecurityLogs;
 use App\Models\User;
 use App\Models\AdminSettings;
 use App\Models\PasswordHistory;
@@ -77,8 +78,12 @@ class DatabaseController extends Controller
 
             $user->password = $final_pass;
             $user->save();
-
-
+          
+            // Log password change
+            SecurityLogs::create([
+                'name' => $user->name,
+                'action' => 'Password changed'
+            ]);
             return 'Success';
         }
         return 'Failed';
