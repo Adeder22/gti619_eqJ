@@ -19,7 +19,7 @@
         <h4>Changement de mot de passe</h4>
         <div>
             <label for="max_day">Durée avant changement de mot de passe (en jours): </label>
-            <input type="number" id="max_day" name="max_day" min="1" value="{{ $passResetTime ?? 1 }}" size="2">
+            <input type="number" id="max_day" name="max_day" min="0" value="{{ $passResetTime ?? 1 }}" size="2">
         </div>
         <div>
             <label for="attempt-limit">Limite de tentatives de connections: </label>

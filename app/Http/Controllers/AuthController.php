@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\SecurityLogs;
+use App\Models\PasswordHistory;
 use Illuminate\Support\Facades\Hash;
 use App\Models\PasswordResetTimes;
 use App\Models\User;
@@ -69,11 +70,7 @@ class AuthController extends Controller
             $user->failed_attempts = 0;
             $user->save();
 
-            // Log successful login attempt
-            SecurityLogs::create([
-                'name' => $user->name,
-                'action' => 'Successful login'
-            ]);
+
 
             $roleRedirectPages = [
                 'Préposé aux clients résidentiels' => 'residents',
@@ -82,9 +79,20 @@ class AuthController extends Controller
             ];
 
             // Check if the password is expired
-            if ($this->isPasswordExpired($user->updated_at)) {
-                return redirect()->route('password-change', ['status' => 'expired', 'name' => $user->name])->with('error', 'Votre mot de passe a expiré. Veuillez le changer.');
+            if ($this->isPasswordExpired($user)) {
+                // Log password expirated login attempt
+                SecurityLogs::create([
+                    'name' => $user->name,
+                    'action' => 'Password expired login attempt'
+                ]);
+                return redirect()->route('password-change', ['status' => 'expired', 'username' => $user->name])->withErrors(['name' => 'Votre mot de passe a expiré. Veuillez le changer.']);
             }
+
+            // Log successful login attempt
+            SecurityLogs::create([
+                'name' => $user->name,
+                'action' => 'Successful login'
+            ]);
 
             $roleName = $user->role->name;
             if (array_key_exists($roleName, $roleRedirectPages)) {
@@ -110,8 +118,17 @@ class AuthController extends Controller
         return back()->withErrors(['name' => 'Identifiants incorrects. Merci d\'attendre 15 secondes avant votre prochaine tentative.'])->withInput();
     }
 
-    private function isPasswordExpired($lastestUserUpdate)
+    private function isPasswordExpired($user)
     {
+        $lastestUserUpdate = $user->created_at;
+        $history = PasswordHistory::where('name', $user->name)
+            ->orderByDesc('created_at')
+            ->first();
+
+        if ($history && $history->count() > 0){
+            $lastestUserUpdate = $history->created_at;
+        }
+
         $passwordResetTime = PasswordResetTimes::latest()->first();
         if ($passwordResetTime) {
             $resetDate = Carbon::parse($passwordResetTime->reset_date)->toDate();
@@ -137,7 +154,7 @@ class AuthController extends Controller
         $title = $request->query('status') === 'expired' ? 'Votre mot de passe a expiré. Veuillez le changer' : 'Changement de mot de passe';
         return view('auth.passwords.password-change', [
             'title' => $title,
-            'name' => $request->query('name'),
+            'username' => $request->query('username'),
             'capitals' => $capitals,
             'special_chars' => $special_chars,
             'numbers' => $numbers,
