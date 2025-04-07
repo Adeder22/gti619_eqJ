@@ -19,8 +19,17 @@ use App\Http\Controllers\RegisterController;
 */
 
 Route::get('/', function () {
-    return view('welcome');
-});
+    $roleLinks = [
+        'Préposé aux clients résidentiels' => ['residents'],
+        'Préposé aux clients d’affaire' => ['affaires'],
+        'Administrateur' => ['residents', 'affaires', 'admin'],
+        'Aucune' => []
+    ];
+
+    $roleName = auth()->user()->role->name;
+    return view('dashboard', [
+        'role' => $roleName, 'links' => $roleLinks[$roleName]]);
+})->middleware('auth')->name('dashboard');
 
 Route::get('/dashboard', function () {
     $roleLinks = [
