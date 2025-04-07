@@ -26,7 +26,7 @@ class AdminController extends Controller
     public function updatePasswordPolicy(Request $request)
     {
         $request->validate([
-            'max_day' => 'required|integer|min:1|max:90',
+            'max_day' => 'required|integer|min:0|max:90',
         ]);
         // Password Reset Time
         $resetDate = Carbon::now()->addDays($request->input('max_day'))->toDateString();

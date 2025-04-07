@@ -69,11 +69,7 @@ class AuthController extends Controller
             $user->failed_attempts = 0;
             $user->save();
 
-            // Log successful login attempt
-            SecurityLogs::create([
-                'name' => $user->name,
-                'action' => 'Successful login'
-            ]);
+
 
             $roleRedirectPages = [
                 'Préposé aux clients résidentiels' => 'residents',
@@ -83,8 +79,19 @@ class AuthController extends Controller
 
             // Check if the password is expired
             if ($this->isPasswordExpired($user->updated_at)) {
+                // Log successful login attempt
+                SecurityLogs::create([
+                    'name' => $user->name,
+                    'action' => 'Expired password login attempt'
+                ]);
                 return redirect()->route('password-change', ['status' => 'expired', 'name' => $user->name])->with('error', 'Votre mot de passe a expiré. Veuillez le changer.');
             }
+
+            // Log successful login attempt
+            SecurityLogs::create([
+                'name' => $user->name,
+                'action' => 'Successful login'
+            ]);
 
             $roleName = $user->role->name;
             if (array_key_exists($roleName, $roleRedirectPages)) {
