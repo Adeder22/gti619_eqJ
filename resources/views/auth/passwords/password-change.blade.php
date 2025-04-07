@@ -8,11 +8,11 @@
                 <div class="card-header">
                     <h2>{{ $title }}</h2>
                 </div>
-                <input type="text" class="form-control" id="nameInput" placeholder="Nom d'utilisateur" name="name" value="{{ $name ?? '' }}" {{ $name ? 'readonly' : '' }} required>
-                @error('name') <p class="text-danger">{{ $message }}</p> @enderror
+                <input type="text" class="form-control" id="nameInput" placeholder="Nom d'utilisateur" name="name" value="{{ $username ?? '' }}" {{ $username ? 'readonly' : '' }} required>
+                @error('name') <p class="fw-bold text-danger">{{ $message }}</p> @enderror
                 <br />
                 <input type="password" class="form-control" id="oldPasswordInput" placeholder="Ancien mot de passe" name="oldPassword" required>
-                @error('password') <p class="text-danger">{{ $message }}</p> @enderror
+                @error('password') <p class="fw-bold text-danger">{{ $message }}</p> @enderror
                 <br />
                 <input type="password" class="form-control" id="newPasswordInput" placeholder="Nouveau mot de passe" name="newPassword" required>
                 <ul class="text-start">
