@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\SecurityLogs;
 use Illuminate\Support\Facades\Hash;
 use App\Models\PasswordResetTimes;
 use App\Models\User;
@@ -50,7 +51,14 @@ class AuthController extends Controller
 
         // Vérifier si l'utilisateur a déjà atteint le nombre maximum de tentatives de connexion
         if ($user) {
-            if (VerifyAttempts($user)) return $failedAttemptReturn;
+            if (VerifyAttempts($user)){
+                // Log reaching max login attempts
+                SecurityLogs::create([
+                    'name' => $user->name,
+                    'action' => 'Max login attempts reached'
+                ]);
+                return $failedAttemptReturn;
+            }
         }
 
         // Check if the user exists and the password is correct
@@ -60,6 +68,12 @@ class AuthController extends Controller
             // Remettre à zéro le nombre de tentatives de connexion
             $user->failed_attempts = 0;
             $user->save();
+
+            // Log successful login attempt
+            SecurityLogs::create([
+                'name' => $user->name,
+                'action' => 'Successful login'
+            ]);
 
             $roleRedirectPages = [
                 'Préposé aux clients résidentiels' => 'residents',
@@ -85,7 +99,11 @@ class AuthController extends Controller
         if ($user) {
             $user->last_attempt = Carbon::now();
             $user->save();
-
+            // Log failed login attempt
+            SecurityLogs::create([
+                'name' => $user->name,
+                'action' => 'Failed login attempt'
+            ]);
             $user->increment('failed_attempts');
             if (VerifyAttempts($user)) return $failedAttemptReturn;
         }
