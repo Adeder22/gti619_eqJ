@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\SecurityLogs;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
@@ -23,7 +24,11 @@ class DatabaseController extends Controller
         if ($user && !$same_pass) {
             $user->password = $final_pass;
             $user->save();
-
+            // Log password change
+            SecurityLogs::create([
+                'name' => $user->name,
+                'action' => 'Password changed'
+            ]);
             return 'Success';
         }
         return 'Failed';
