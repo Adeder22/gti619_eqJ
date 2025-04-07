@@ -35,10 +35,8 @@ Route::get('/dashboard', function () {
         'role' => $roleName, 'links' => $roleLinks[$roleName]]);
 })->middleware('auth')->name('dashboard');
 
-Route::get('/register', function () {
-    return view('auth.register');
-})->name('register');
 
+Route::get('/register', [RegisterController::class, 'index'])->name('register');
 Route::post('/register', [RegisterController::class, 'register']);
 
 Route::get('/login', [AuthController::class, 'showLogin'])->name('login');
