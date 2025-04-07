@@ -40,18 +40,17 @@ class AuthController extends Controller
 
         $user = User::where('name', $credentials['name'])->first();
 
-        // Check if it's been fifteen seconds since last attempt
-        if ($user->last_attempt != null) {
-            $now = Carbon::now();
-            $last_attempt = Carbon::parse($user->last_attempt);
-            $diff = $last_attempt->diffInSeconds($now);
-            if ($diff < 15) {
-                return back()->withErrors(['name' => 'Merci d\'attendre ' . strval(15 - $diff) . ' secondes avant votre prochaine tentative.'])->withInput();
-            }
-        }
-
-        // Vérifier si l'utilisateur a déjà atteint le nombre maximum de tentatives de connexion
         if ($user) {
+            // Check if it's been fifteen seconds since last attempt
+            if ($user->last_attempt != null) {
+                $now = Carbon::now();
+                $last_attempt = Carbon::parse($user->last_attempt);
+                $diff = $last_attempt->diffInSeconds($now);
+                if ($diff < 15) {
+                    return back()->withErrors(['name' => 'Merci d\'attendre ' . strval(15 - $diff) . ' secondes avant votre prochaine tentative.'])->withInput();
+                }
+            }
+            // Vérifier si l'utilisateur a déjà atteint le nombre maximum de tentatives de connexion
             if (VerifyAttempts($user)){
                 // Log reaching max login attempts
                 SecurityLogs::create([
