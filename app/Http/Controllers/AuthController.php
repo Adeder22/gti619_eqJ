@@ -22,11 +22,10 @@ class AuthController extends Controller
     }
     public function login(Request $request)
     {
-        function VerifyFailedAttempts($user)
+        $failedAttemptReturn = back()->withErrors(['name' => 'Trop de tentatives de connexion échouées.Veuillez contacter un responsable'])->withInput();
+        function VerifyAttempts($user)
         {
-            if ($user->failed_attempts >= 3) {
-                return back()->withErrors(['name' => 'Trop de tentatives de connexion échouées.Veuillez contacter un responsable'])->withInput();
-            }
+            return $user->failed_attempts >= 3;
         }
 
         $credentials = $request->validate([
@@ -48,7 +47,7 @@ class AuthController extends Controller
 
         // Vérifier si l'utilisateur a déjà atteint le nombre maximum de tentatives de connexion
         if ($user) {
-            VerifyFailedAttempts($user);
+            if (VerifyAttempts($user)) return $failedAttemptReturn;
         }
 
         // Check if the user exists and the password is correct
@@ -81,11 +80,11 @@ class AuthController extends Controller
         //incrémenter le nombre de tentatives de connexion si l'utilisateur existe
         // et que le mot de passe est incorrect
         if ($user) {
-            $user->increment('failed_attempts');
-            VerifyFailedAttempts($user);
-
             $user->last_attempt = Carbon::now();
             $user->save();
+
+            $user->increment('failed_attempts');
+            if (VerifyAttempts($user)) return $failedAttemptReturn;
         }
         return back()->withErrors(['name' => 'Identifiants incorrects. Merci d\'attendre 15 secondes avant votre prochaine tentative.'])->withInput();
     }
