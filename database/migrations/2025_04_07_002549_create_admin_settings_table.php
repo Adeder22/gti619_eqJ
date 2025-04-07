@@ -16,6 +16,11 @@ class CreateAdminSettingsTable extends Migration
         Schema::create('admin_settings', function (Blueprint $table) {
             $table->id();
             $table->string('attempts');
+            $table->string('old_passes');
+            $table->boolean('capitals');
+            $table->boolean('special_chars');
+            $table->boolean('numbers');
+            $table->string('length');
             $table->timestamps();
         });
     }
